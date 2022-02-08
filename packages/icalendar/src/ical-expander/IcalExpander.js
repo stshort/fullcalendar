@@ -36,9 +36,14 @@ export class IcalExpander {
       (!before || startTime <= before.getTime());
     }
 
-    function getTimes(eventOrOccurrence) {
-      const startTime = eventOrOccurrence.startDate.toJSDate().getTime();
-      let endTime = eventOrOccurrence.endDate.toJSDate().getTime();
+    function getTimes(eventOrOccurrence, onlyDate) {
+      const start = eventOrOccurrence.startDate.toJSDate();
+      const end = eventOrOccurrence.endDate.toJSDate();
+
+      // If we are only checking the date portions, return new date objects that contain no time fields. This is important
+      // for omitting exclusion dates where VALUE=DATE, i.e. EXDATE;VALUE=DATE:20220210/P1D
+      const startTime = onlyDate ? new Date(start.getFullYear(), start.getMonth(), start.getDate()).getTime() : start.getTime();
+      let endTime = onlyDate ? new Date(start.getFullYear(), start.getMonth(), start.getDate()).getTime() : end.getTime();
 
       // If it is an all day event, the end date is set to 00:00 of the next day
       // So we need to make it be 23:59:59 to compare correctly with the given range
