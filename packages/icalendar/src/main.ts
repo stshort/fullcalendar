@@ -159,6 +159,7 @@ function buildNonDateProps(iCalEvent: ICAL.Event): EventInput {
       location: iCalEvent.location,
       organizer: iCalEvent.organizer,
       description: iCalEvent.description,
+      uid: iCalEvent.uid,
     },
   }
 }
