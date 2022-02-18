@@ -86,7 +86,7 @@ export class IcalExpander {
           if (next) {
             const occurrence = event.getOccurrenceDetails(next);
 
-            const { startTime, endTime } = getTimes(occurrence);
+            const { startTime, endTime } = getTimes(occurrence, true);
 
             const isOccurrenceExcluded = exdates.indexOf(startTime) !== -1;
 
